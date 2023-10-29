@@ -1,0 +1,6 @@
+# Detectron2
+1. Install Git: https://git-scm.com/download/win
+2. Install Visual Studio 2019: https://visualstudio.microsoft.com/vs/older-downloads/#visual-studio-2019-and-other-products
+3. pip install cython
+4. pip install opencv-python
+5. pip install git+https://github.com/facebookresearch/detectron2.git

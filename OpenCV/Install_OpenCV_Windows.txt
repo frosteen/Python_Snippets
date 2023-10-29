@@ -1,0 +1,7 @@
+# Install only one not both
+
+# Simpler version
+pip install opencv-python
+
+# Opencv with other dependencies
+pip install opencv-contrib-python

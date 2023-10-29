@@ -1,0 +1,20 @@
+GO HERE FIRST: 
+https://www.tensorflow.org/install/source#gpu
+
+1. Microsoft Visual Studio
+https://visualstudio.microsoft.com/vs/community/
+
+2. the NVIDIA CUDA Toolkit
+https://developer.nvidia.com/cuda-toolkit-archive
+
+3. NVIDIA cuDNN
+https://developer.nvidia.com/cudnn
+
+4. Tensorflow (with GPU support)
+pip install tensorflow
+
+5. Add the following in PATH for User Variables
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\<cuda version>\bin
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\<cuda version>\extras\CUPTI\lib64
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\<cuda version>\include
+C:\tools\cuda\bin
