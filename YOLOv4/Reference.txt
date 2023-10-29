@@ -1,2 +1,0 @@
-https://lindevs.com/yolov4-object-detection-using-opencv/
-https://github.com/AlexeyAB/darknet
