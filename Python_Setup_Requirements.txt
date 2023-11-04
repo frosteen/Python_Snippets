@@ -28,6 +28,9 @@ sympy
 # SPEECH RECOGNITION
 speechrecognition
 
+# TEXT TO SPEECH
+pyttsx3
+
 # DATABASE
 firebase-admin
 pyodbc
