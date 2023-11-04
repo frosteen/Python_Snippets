@@ -24,7 +24,7 @@ numpy
 pandas
 scikit-learn
 matplotlib
-tensorflow
+tensorflow==2.10.0 # for windows to support GPU
 torch
 
 # SPEECH RECOGNITION
@@ -37,3 +37,4 @@ firebase-admin
 cython
 sympy
 pygame
+tabulate
