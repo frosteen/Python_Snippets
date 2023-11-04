@@ -36,3 +36,4 @@ pyodbc
 pygame
 pynput
 tabulate
+pyserial
