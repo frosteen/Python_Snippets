@@ -2,7 +2,7 @@
 pyqt5
 pyqt5-tools
 
-# WEB DEV
+# WEB DEVELOPMENT
 flask
 
 # IMAGE PROCESSING
