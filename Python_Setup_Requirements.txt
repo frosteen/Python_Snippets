@@ -10,31 +10,29 @@ opencv-python
 imutils
 pillow
 
-# KEYBOARD
-pynput
-
 # AUTOMATION / WEB SCRAPPING
+requests
 selenium
 beautifulsoup4
 chromedriver-autoinstaller-fix
 
 # MACHINE LEARNING
-joblib
 numpy
 pandas
 scikit-learn
 matplotlib
 tensorflow==2.10.0 # for windows to support GPU
 torch
+sympy
 
 # SPEECH RECOGNITION
-SpeechRecognition
+speechrecognition
 
 # DATABASE
 firebase-admin
+pyodbc
 
-# OTHERS
-cython
-sympy
+# ETC
 pygame
+pynput
 tabulate
