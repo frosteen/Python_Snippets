@@ -53,10 +53,10 @@ class MainWindow(Window):
 
         # Plot Start #
         x_values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        y_valeus = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        y_values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         self.ax.clear()
         # self.ax.plot(x_values)
-        self.ax.plot(x_values, y_valeus)
+        self.ax.plot(x_values, y_values)
         self.figure.tight_layout()
         self.canvas.draw()
         # Plot End #
