@@ -1,0 +1,39 @@
+# GUI
+pyqt5
+pyqt5-tools
+
+# WEB DEV
+flask
+
+# IMAGE PROCESSING
+opencv-python
+imutils
+pillow
+
+# KEYBOARD
+pynput
+
+# AUTOMATION / WEB SCRAPPING
+selenium
+beautifulsoup4
+chromedriver-autoinstaller-fix
+
+# MACHINE LEARNING
+joblib
+numpy
+pandas
+scikit-learn
+matplotlib
+tensorflow
+torch
+
+# SPEECH RECOGNITION
+SpeechRecognition
+
+# DATABASE
+firebase-admin
+
+# OTHERS
+cython
+sympy
+pygame
