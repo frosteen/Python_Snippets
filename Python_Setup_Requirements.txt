@@ -1,4 +1,4 @@
-# GUI
+# GRAPHICAL USER INTERFACE
 pyqt5
 pyqt5-tools
 
@@ -21,19 +21,17 @@ numpy
 pandas
 scikit-learn
 matplotlib
-tensorflow==2.10.0 # for windows to support GPU
-torch
 sympy
+tensorflow==2.10.0 # for windows to support GPU
+torch # for PyTorch with GPU locate MachineLearning/PyTorch_Installation_with_GPU.txt
 
-# SPEECH RECOGNITION
+# SPEECH LIBRARIES
 speechrecognition
-
-# TEXT TO SPEECH
 pyttsx3
 
 # DATABASE
 firebase-admin
-pyodbc
+pyodbc # for Microsoft SQL Server
 
 # ETC
 pygame

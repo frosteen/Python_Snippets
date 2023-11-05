@@ -1,0 +1,8 @@
+# PyTorch GPU
+1. Get CUDA Version Recommended by PyTorch: https://pytorch.org/get-started/locally/
+1. Install Visual Studio 2019: https://visualstudio.microsoft.com/vs/older-downloads/#visual-studio-2019-and-other-products
+2. Install CUDA: https://developer.nvidia.com/cuda-<version>-download-archive
+3. Install PyTorch with CUDA: pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/<version>
+4. PyTorch with GPU Verification:
+import torch
+torch.cuda.is_available() # must output True

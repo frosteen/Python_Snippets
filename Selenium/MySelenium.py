@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import chromedriver_autoinstaller_fix
 
 
-def url_contains(driver, url, timeout=10):
+def url_contains(driver, url, timeout=300):
     for _ in range(timeout):
         if url in driver.current_url:
             return True
@@ -17,19 +17,19 @@ def url_contains(driver, url, timeout=10):
     return False
 
 
-def find_xpath_element(driver, xpath, timeout=5):
+def find_xpath_element(driver, xpath, timeout=300):
     try:
+        element = WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located((By.XPATH, xpath))
+        )
+        return element
+    except StaleElementReferenceException:
         element = WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located((By.XPATH, xpath))
         )
         return element
     except TimeoutException:
         return False
-    except StaleElementReferenceException:
-        element = WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located((By.XPATH, xpath))
-        )
-        return element
 
 
 def find_xpath_element_until_not(driver, xpath, timeout=300):
@@ -38,13 +38,13 @@ def find_xpath_element_until_not(driver, xpath, timeout=300):
             EC.presence_of_element_located((By.XPATH, xpath))
         )
         return element
-    except TimeoutException:
-        return False
     except StaleElementReferenceException:
         element = WebDriverWait(driver, timeout).until_not(
             EC.presence_of_element_located((By.XPATH, xpath))
         )
         return element
+    except TimeoutException:
+        return False
 
 
 def find_xpath_elements(driver, xpath, timeout=300):
@@ -53,13 +53,13 @@ def find_xpath_elements(driver, xpath, timeout=300):
             EC.presence_of_all_elements_located((By.XPATH, xpath))
         )
         return elements
-    except TimeoutException:
-        return False
     except StaleElementReferenceException:
         elements = WebDriverWait(driver, timeout).until(
             EC.presence_of_all_elements_located((By.XPATH, xpath))
         )
         return elements
+    except TimeoutException:
+        return False
 
 
 def find_xpath_elements_until_not(driver, xpath, timeout=300):
@@ -68,13 +68,13 @@ def find_xpath_elements_until_not(driver, xpath, timeout=300):
             EC.presence_of_all_elements_located((By.XPATH, xpath))
         )
         return elements
-    except TimeoutException:
-        return False
     except StaleElementReferenceException:
         elements = WebDriverWait(driver, timeout).until_not(
             EC.presence_of_all_elements_located((By.XPATH, xpath))
         )
         return elements
+    except TimeoutException:
+        return False
 
 
 def find_xpath_element_button(driver, xpath, timeout=300):
@@ -83,13 +83,13 @@ def find_xpath_element_button(driver, xpath, timeout=300):
             EC.element_to_be_clickable((By.XPATH, xpath))
         )
         return element_button
-    except TimeoutException:
-        return False
     except StaleElementReferenceException:
         element_button = WebDriverWait(driver, timeout).until(
             EC.element_to_be_clickable((By.XPATH, xpath))
         )
         return element_button
+    except TimeoutException:
+        return False
 
 
 def check_alert(driver, timeout=15):

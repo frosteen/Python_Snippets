@@ -1,23 +1,29 @@
-GO HERE FIRST: 
+1. GO HERE FIRST:
+# Get cuDNN and CUDA Versions according to Python Version
+## LINUX/MACOS
 https://www.tensorflow.org/install/source#gpu
+## WINDOWS
+https://www.tensorflow.org/install/source_windows
 
-1. Microsoft Visual Studio
+2. Install Microsoft Visual Studio
 https://visualstudio.microsoft.com/vs/community/
 
-2. the NVIDIA CUDA Toolkit
+3. Instal NVIDIA CUDA Toolkit
 https://developer.nvidia.com/cuda-toolkit-archive
 
-3. NVIDIA cuDNN
+4. Install NVIDIA cuDNN
 https://developer.nvidia.com/cudnn
 
-4. Tensorflow (with GPU support)
+5. Install Tensorflow with GPU
+# Note: GPU support on native-Windows is only available for 2.10 or earlier versions, starting in TF 2.11, CUDA build is not supported for Windows. For using TensorFlow GPU on Windows, you will need to build/install TensorFlow in WSL2 or use tensorflow-cpu with TensorFlow-DirectML-Plugin
 pip install tensorflow==2.10.0
 
-*Note: GPU support on native-Windows is only available for 2.10 or earlier versions, starting in TF 2.11, CUDA build is not supported for Windows. For using TensorFlow GPU on Windows, you will need to build/install TensorFlow in WSL2 or use tensorflow-cpu with TensorFlow-DirectML-Plugin
-
-
-5. Add the following in PATH for User Variables
+6. Add the following in PATH for User Variables
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\<cuda version>\bin
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\<cuda version>\extras\CUPTI\lib64
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\<cuda version>\include
 C:\tools\cuda\bin
+
+7. Tensorflow GPU Verification Code:
+import tensorflow as tf
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU'))) # should return number of GPUs available
