@@ -3,7 +3,7 @@ A collection of python snippets that I often use for my freelance projects.
 
 ## Getting Started
 ```
-    pip install -r Python_Setup_Requirements.txt
+pip install -r Python_Setup_Requirements.txt
 ```
 
 ## Tip
