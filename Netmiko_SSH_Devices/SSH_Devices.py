@@ -86,7 +86,6 @@ def main():
         csvreader = csv.DictReader(file)
         for x in csvreader:
             list_of_devices.append(x)
-    # print(list_of_devices)
 
     threadpool_results = []
     with ThreadPoolExecutor(max_workers=50) as executor:
