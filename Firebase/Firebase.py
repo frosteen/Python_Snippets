@@ -3,9 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import db
 
 
-cred = credentials.Certificate(
-    "guide-blind-people-firebase-adminsdk-5ol9c-a66b782e74.json"
-)
+cred = credentials.Certificate("guide-blind-people-firebase-adminsdk.json")
 firebase_admin.initialize_app(
     cred, {"databaseURL": "https://guide-blind-people-default-rtdb.firebaseio.com/"}
 )
