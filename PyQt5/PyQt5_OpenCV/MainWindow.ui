@@ -14,21 +14,73 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <widget class="QLabel" name="labelCamera">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>100</y>
-      <width>641</width>
-      <height>451</height>
+      <x>0</x>
+      <y>0</y>
+      <width>1281</width>
+      <height>591</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButtonCapture">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>652</y>
+      <width>1281</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana</family>
+      <pointsize>36</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0, 85, 255);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>CAPTURE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelClassification">
+    <property name="geometry">
+     <rect>
+      <x>-4</x>
+      <y>592</y>
+      <width>1291</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana</family>
+      <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>PRESS 'CAPTURE' BUTTON TO CLASSIFY...</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

@@ -9,10 +9,10 @@ warnings.filterwarnings("ignore")
 
 import tensorflow as tf
 from sklearn.metrics import accuracy_score, confusion_matrix
-from tensorflow.keras import Input, Sequential, losses, metrics, optimizers
+from tensorflow.keras import Input, Sequential, optimizers
 from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPool2D
-from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.callbacks import ModelCheckpoint
 
 from PlotConfusionMatrix import plot_confusion_matrix
 
@@ -26,25 +26,28 @@ def CNN_Model(image_size):
     model = Sequential(
         [
             Input(shape=(image_size[0], image_size[1], 3)),
-            Conv2D(filters=10, kernel_size=(3, 3), activation="relu"),
-            MaxPool2D(pool_size=(2, 2)),
             Conv2D(filters=32, kernel_size=(3, 3), activation="relu"),
             MaxPool2D(pool_size=(2, 2)),
             Conv2D(filters=64, kernel_size=(3, 3), activation="relu"),
             MaxPool2D(pool_size=(2, 2)),
+            Conv2D(filters=128, kernel_size=(3, 3), activation="relu"),
+            MaxPool2D(pool_size=(2, 2)),
             Flatten(),
-            # Dense(units=256, activation="relu"),
-            # Dropout(0.5),
+            Dense(units=256, activation="relu"),
+            Dropout(0.5),
             Dense(units=1, activation="sigmoid"),
         ]
     )
 
     # MODEL COMPILE
     model.compile(
-        loss=losses.BinaryCrossentropy(),
-        optimizer=optimizers.Adam(learning_rate=0.0001),
+        optimizer=optimizers.Adam(learning_rate=0.001),
+        loss="binary_crossentropy",
         metrics=["accuracy"],
     )
+
+    # PRINT MODEL SUMMARY
+    model.summary()
 
     return model
 
@@ -78,7 +81,17 @@ def plot_loss_curves(history, save_path=""):
 
 def CNN_Training(data_dir, image_size, save_path="CNN_Results"):
     # DATA GENERATOR
-    data_gen = ImageDataGenerator(rescale=1 / 255.0, validation_split=0.2)
+    data_gen = ImageDataGenerator(
+        rescale=1.0 / 255,
+        validation_split=0.2,
+        rotation_range=20,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True,
+        fill_mode="nearest",
+    )
 
     train_data = data_gen.flow_from_directory(
         data_dir,
@@ -101,29 +114,51 @@ def CNN_Training(data_dir, image_size, save_path="CNN_Results"):
     # CREATE MODEL
     model = CNN_Model(image_size)
 
+    # GET BEST MODEL CHECKPOINT
+    checkpoint_path = os.path.join(save_path, "CNN_Best.keras")
+    checkpoint = ModelCheckpoint(
+        checkpoint_path,
+        monitor="val_loss",
+        verbose=1,
+        save_best_only=True,
+        save_weights_only=True,
+        mode="max",
+    )
+
     # FIT MODEL
     history = model.fit(
         train_data,
-        epochs=50,
+        epochs=20,
+        steps_per_epoch=len(train_data),
         validation_data=val_data,
+        validation_steps=len(val_data),
+        callbacks=[checkpoint],
     )
 
     # SAVE MODEL
-    model.save_weights(os.path.join(save_path, "CNN.keras"))
+    model.save_weights(os.path.join(save_path, "CNN_Best.keras"))
 
     # Convert to TF Lite format
     converter = tf.lite.TFLiteConverter.from_keras_model(model)
     tflite_model = converter.convert()
 
     # Save TF Lite Model
-    tf.io.write_file(os.path.join(save_path, "CNN.tflite"), tflite_model)
+    tf.io.write_file(os.path.join(save_path, "CNN_Best.tflite"), tflite_model)
 
     # PLOT LOSS ACCURACY
     plot_loss_curves(history, save_path)
 
     # GET TEST DATA FROM GENERATOR
-    X_test = np.concatenate([val_data.next()[0] for _ in range(val_data.__len__())])
-    y_test = np.concatenate([val_data.next()[1] for _ in range(val_data.__len__())])
+    X_test_batches = []
+    y_test_batches = []
+
+    for _ in range(val_data.__len__()):
+        batch = val_data.next()
+        X_test_batches.append(batch[0])
+        y_test_batches.append(batch[1])
+
+    X_test = np.concatenate(X_test_batches)
+    y_test = np.concatenate(y_test_batches)
 
     # PREDICT TEST DATA
     y_predict = model.predict(X_test)
@@ -155,7 +190,7 @@ def CNN_Training(data_dir, image_size, save_path="CNN_Results"):
 
 def CNN_Evaluate(weights_path, data_dir, image_size, save_path="CNN_Results"):
     # DATA GENERATOR
-    data_gen = ImageDataGenerator(rescale=1 / 255.0, validation_split=0.2)
+    data_gen = ImageDataGenerator(rescale=1.0 / 255, validation_split=0.2)
 
     val_data = data_gen.flow_from_directory(
         data_dir,
@@ -173,8 +208,16 @@ def CNN_Evaluate(weights_path, data_dir, image_size, save_path="CNN_Results"):
     model.load_weights(weights_path)
 
     # GET TEST DATA FROM GENERATOR
-    X_test = np.concatenate([val_data.next()[0] for _ in range(val_data.__len__())])
-    y_test = np.concatenate([val_data.next()[1] for _ in range(val_data.__len__())])
+    X_test_batches = []
+    y_test_batches = []
+
+    for _ in range(val_data.__len__()):
+        batch = val_data.next()
+        X_test_batches.append(batch[0])
+        y_test_batches.append(batch[1])
+
+    X_test = np.concatenate(X_test_batches)
+    y_test = np.concatenate(y_test_batches)
 
     # PREDICT TEST DATA
     y_predict = model.predict(X_test)
@@ -247,18 +290,20 @@ def CNN_Preprocess_Image(image_input, image_size):
 
 
 if __name__ == "__main__":
-    data_dir = r"C:\Users\Luis Daniel Pambid\Downloads\archive\pizza_not_pizza"
+    data_dir = r"DATASET"
 
-    # CNN_Training(data_dir, (32, 32))
+    CNN_Training(data_dir, (64, 64))
 
-    # CNN_Evaluate(os.path.join("CNN_Results", "CNN.keras"), data_dir, (32, 32))
+    # CNN_Evaluate(os.path.join("CNN_Results", "CNN_Best.keras"), data_dir, (64, 64))
 
-    # TF
-    # image = cv2.imread("Test_Pictures/1000PHP.jpg")
-    # result = CNN_Predict(os.path.join("CNN_Results", "CNN.keras"), image, (32, 32))
+    # # TF
+    # image = cv2.imread("DATASET/FERTILE/20240213_194825.jpg")
+    # result = CNN_Predict(os.path.join("CNN_Results", "CNN_Best.keras"), image, (64, 64))
     # print(result)
 
-    # TF LITE (FASTER)
-    image = cv2.imread("Test_Pictures/1000PHP.jpg")
-    result = CNN_Predict_TF(os.path.join("CNN_Results", "CNN.tflite"), image, (32, 32))
-    print(result)
+    # # TF LITE (FASTER)
+    # image = cv2.imread("DATASET/INFERTILE/20240225_054302.jpg")
+    # result = CNN_Predict_TF(
+    #     os.path.join("CNN_Results", "CNN_Best.tflite"), image, (64, 64)
+    # )
+    # print(result)
