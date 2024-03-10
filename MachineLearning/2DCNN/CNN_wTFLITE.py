@@ -122,7 +122,7 @@ def CNN_Training(data_dir, image_size, save_path="CNN_Results"):
         verbose=1,
         save_best_only=True,
         save_weights_only=True,
-        mode="max",
+        mode="min",
     )
 
     # FIT MODEL
@@ -136,10 +136,12 @@ def CNN_Training(data_dir, image_size, save_path="CNN_Results"):
     )
 
     # SAVE MODEL
-    model.save_weights(os.path.join(save_path, "CNN_Best.keras"))
+    model.save_weights(os.path.join(save_path, "CNN_Last.keras"))
 
     # Convert to TF Lite format
-    converter = tf.lite.TFLiteConverter.from_keras_model(model)
+    best_model = CNN_Model(image_size)
+    best_model.load_weights(os.path.join(save_path, "CNN_Best.keras"))
+    converter = tf.lite.TFLiteConverter.from_keras_model(best_model)
     tflite_model = converter.convert()
 
     # Save TF Lite Model
@@ -161,11 +163,11 @@ def CNN_Training(data_dir, image_size, save_path="CNN_Results"):
     y_test = np.concatenate(y_test_batches)
 
     # PREDICT TEST DATA
-    y_predict = model.predict(X_test)
+    y_predict = best_model.predict(X_test)
     y_predict = [0 if val < 0.5 else 1 for val in y_predict]
 
     # MODEL EVALUATION
-    score = model.evaluate(val_data, verbose=2)
+    score = best_model.evaluate(val_data, verbose=2)
     with open(os.path.join(save_path, "Model_Evaluation.txt"), "w") as f:
         f.write("Evaluation Loss: {}\n".format(score[0]))
         f.write("Evaluation Accuracy: {}".format(score[1]))
