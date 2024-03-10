@@ -10,11 +10,11 @@ warnings.filterwarnings("ignore")
 import tensorflow as tf
 from sklearn.metrics import accuracy_score, confusion_matrix
 from tensorflow.keras import Input, Sequential, optimizers
+from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPool2D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.callbacks import ModelCheckpoint
 
-from PlotConfusionMatrix import plot_confusion_matrix
+from Utils.PlotConfusionMatrix import plot_confusion_matrix
 
 # RESOLVE DISCREPANCY
 tf.keras.backend.set_learning_phase(0)
@@ -294,7 +294,7 @@ def CNN_Preprocess_Image(image_input, image_size):
 if __name__ == "__main__":
     data_dir = r"DATASET"
 
-    CNN_Training(data_dir, (64, 64))
+    # CNN_Training(data_dir, (64, 64))
 
     # CNN_Evaluate(os.path.join("CNN_Results", "CNN_Best.keras"), data_dir, (64, 64))
 
@@ -303,9 +303,9 @@ if __name__ == "__main__":
     # result = CNN_Predict(os.path.join("CNN_Results", "CNN_Best.keras"), image, (64, 64))
     # print(result)
 
-    # # TF LITE (FASTER)
-    # image = cv2.imread("DATASET/INFERTILE/20240225_054302.jpg")
-    # result = CNN_Predict_TF(
-    #     os.path.join("CNN_Results", "CNN_Best.tflite"), image, (64, 64)
-    # )
-    # print(result)
+    # TF LITE (FASTER)
+    image = cv2.imread("DATASET/INFERTILE/20240225_022033.jpg")
+    result = CNN_Predict_TF(
+        os.path.join("CNN_Results", "CNN_Best.tflite"), image, (64, 64)
+    )
+    print(result)
