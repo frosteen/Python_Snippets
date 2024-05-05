@@ -304,7 +304,7 @@ if __name__ == "__main__":
     # print(result)
 
     # TF LITE (FASTER)
-    image = cv2.imread("DATASET/INFERTILE/20240225_022033.jpg")
+    image = cv2.imread("DATASET/INFERTILE/22.jpg")
     result = CNN_Predict_TF(
         os.path.join("CNN_Results", "CNN_Best.tflite"), image, (64, 64)
     )
