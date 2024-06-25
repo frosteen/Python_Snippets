@@ -4,29 +4,13 @@ from tensorflow.keras.models import Model
 
 def model_3dcnn_lstm(model_input, gestures):
     # 3DCNN Layers
-    x = layers.Conv3D(
-        32,
-        3,
-        activation="relu",
-    )(model_input)
-    x = layers.Conv3D(
-        32,
-        3,
-        activation="relu",
-    )(x)
+    x = layers.Conv3D(32, 3, activation="relu")(model_input)
+    x = layers.Conv3D(32, 3, activation="relu")(x)
     x = layers.MaxPooling3D()(x)
     x = layers.Dropout(0.5)(x)
 
-    x = layers.Conv3D(
-        64,
-        3,
-        activation="relu",
-    )(x)
-    x = layers.Conv3D(
-        64,
-        3,
-        activation="relu",
-    )(x)
+    x = layers.Conv3D(64, 3, activation="relu")(x)
+    x = layers.Conv3D(64, 3, activation="relu")(x)
     x = layers.MaxPooling3D()(x)
     x = layers.Dropout(0.5)(x)
 
