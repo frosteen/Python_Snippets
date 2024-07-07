@@ -3,8 +3,8 @@ import numpy as np
 import tflite_runtime.interpreter as tflite
 
 
-def CNN_Predict_TF(tflite_path, image_input, image_size):
-    img = CNN_Preprocess_Image(image_input, image_size)
+def CNN_PREDICT_TF(tflite_path, image_input, image_size):
+    img = CNN_PREPROCESS_IMAGE(image_input, image_size)
     img = img.astype(np.float32)
 
     # Load the TFLite model and allocate tensors.
@@ -28,7 +28,7 @@ def CNN_Predict_TF(tflite_path, image_input, image_size):
     return result[0]
 
 
-def CNN_Preprocess_Image(image_input, image_size):
+def CNN_PREPROCESS_IMAGE(image_input, image_size):
     img = cv2.resize(image_input, image_size, interpolation=cv2.INTER_AREA)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = img / 255
