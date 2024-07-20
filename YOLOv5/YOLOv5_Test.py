@@ -7,7 +7,10 @@ model = torch.hub.load(
     "yolov5s",
 )  # or yolov5m, yolov5l, yolov5x, custom
 
-model.cuda()
+model.to("cuda")
+model.eval()
+model.conf = 0.5
+
 
 # Images
 img = "https://ultralytics.com/images/zidane.jpg"  # or file, Path, PIL, OpenCV, numpy, list
