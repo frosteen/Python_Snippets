@@ -16,7 +16,8 @@ model.conf = 0.5
 img = "https://ultralytics.com/images/zidane.jpg"  # or file, Path, PIL, OpenCV, numpy, list
 
 # Inference
-results = model(img)
+with torch.no_grad():
+    results = model(img)
 
 # Results
 results.show()  # or .show(), .save(), .crop(), .pandas(), etc.

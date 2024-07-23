@@ -17,10 +17,9 @@ while cap.isOpened():
     if not ret:
         break
 
-    frame = cv2.cvtColor(
-        frame, cv2.COLOR_BGR2RGB
-    )  # Must convert to RGB before inputting to the model
-    results = model(frame)
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    with torch.no_grad():
+        results = model(frame)
     results_df = results.pandas().xyxy[0]
     results.render()
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
